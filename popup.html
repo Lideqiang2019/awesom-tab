@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Awesome Tab</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -10,6 +11,10 @@
 </head>
 
 <body>
+    <div id="error-container" class="error-message">
+        <button class="close-btn" onclick="closeError()">X</button>
+        <span id="error-text"></span>
+    </div>
     <h1 class="welcome-title">
         <i class="far fa-grin-stars"></i>
         Awesome Tab!
@@ -42,5 +47,15 @@
         </div>
     </footer>
     <script src="popup.js"></script>
+    <script>
+        function showError(message) {
+            document.getElementById('error-text').textContent = message;
+            document.getElementById('error-container').style.display = 'block';
+        }
+
+        function closeError() {
+            document.getElementById('error-container').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

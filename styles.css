@@ -181,3 +181,22 @@ button:active::before {
         opacity: 1;
     }
 }
+
+.error-message {
+    background-color: #f8d7da; /* 浅红色背景 */
+    color: #721c24; /* 深红色文字 */
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    display: none; /* 默认隐藏 */
+    margin-bottom: 10px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #721c24;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
+}

@@ -127,3 +127,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
     return true;
 });
+
+function handleError(error) {
+    // 通过消息传递将错误信息发送到 popup.html
+    chrome.runtime.sendMessage({ type: 'showError', message: error.message });
+}

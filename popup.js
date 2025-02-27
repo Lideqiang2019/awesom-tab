@@ -81,4 +81,10 @@ document.addEventListener('DOMContentLoaded', function() {
             sortOrderSelect.value = result.sortOrder;
         }
     });
+
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        if (request.type === 'showError') {
+            showError(request.message);
+        }
+    });
 }); 
