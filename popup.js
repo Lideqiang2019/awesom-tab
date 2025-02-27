@@ -103,4 +103,13 @@ document.addEventListener('DOMContentLoaded', function() {
             showError(request.message);
         }
     });
+
+    function showError(message) {
+        document.getElementById('error-text').textContent = message;
+        document.getElementById('error-container').style.display = 'block';
+    }
+
+    function closeError() {
+        document.getElementById('error-container').style.display = 'none';
+    }
 }); 
