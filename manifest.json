@@ -2,9 +2,9 @@
     "manifest_version": 3,
     "name": "Awesome Tab",
     "version": "1.0",
-    "description": "A powerful tab management extension for Chrome. © 2025 Lintang. All rights reserved.",
+    "description": "A powerful tab management extension for Chrome. © 2025 deqiang. All rights reserved.",
     "author": "deqiang",
-    "copyright": "© 2025 Lintang. All rights reserved.",
+    "copyright": "© 2025 deqiang. All rights reserved.",
     "license": "MIT",
     "permissions": [
         "tabs",
