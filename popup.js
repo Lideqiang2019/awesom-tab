@@ -33,30 +33,46 @@ document.addEventListener('DOMContentLoaded', function() {
         // 2秒后自动消失
         setTimeout(() => {
             notification.remove();
-        }, 2000);
+        }, 3000);
     }
 
     // 组织标签页
     organizeButton.addEventListener('click', function() {
         saveSettings();
-        chrome.runtime.sendMessage({action: 'organize'}, function(response) {
-            if (response && response.results) {
-                const {successCount, noGroupCount, totalDomains} = response.results;
-                
-                if (successCount > 0) {
-                    showNotification(`成功创建 ${successCount} 个分组！`, true);
-                } else {
-                    if (totalDomains === 0) {
-                        showNotification('没有发现任何标签页，请打开一些网页后再试。', false);
-                    } else if (noGroupCount === totalDomains) {
-                        showNotification('当前标签页都是单独的域名，无法进行分组。', false);
-                    } else {
-                        showNotification('分组失败，请稍后重试。', false);
-                    }
+        
+        // 先取消所有现有的分组
+        chrome.tabs.query({}, function(tabs) {
+            const ungroupPromises = tabs.map(tab => {
+                if (tab.groupId !== -1) {
+                    return new Promise(resolve => {
+                        chrome.tabs.ungroup(tab.id, resolve);
+                    });
                 }
-            } else {
-                showNotification('操作失败，请检查浏览器权限后重试。', false);
-            }
+                return Promise.resolve();
+            });
+
+            Promise.all(ungroupPromises).then(() => {
+                // 取消分组后再进行组织
+                chrome.runtime.sendMessage({action: 'organize'}, function(response) {
+                    if (response && response.results) {
+                        const {successCount, noGroupCount, totalDomains} = response.results;
+                        
+                        if (successCount > 0) {
+                            showNotification(`成功创建 ${successCount} 个分组！`, true);
+                        } else {
+                            if (totalDomains === 0) {
+                                showNotification('没有发现任何标签页，请打开一些网页后再试。', false);
+                            } else if (noGroupCount === totalDomains) {
+                                showNotification('当前标签页都是单独的域名，无法进行分组。', false);
+                            } else {
+                                showNotification('分组失败，请稍后重试。', false);
+                            }
+                        }
+                    } else {
+                        showNotification('操作失败，请检查浏览器权限后重试。', false);
+                    }
+                });
+            });
         });
     });
 
